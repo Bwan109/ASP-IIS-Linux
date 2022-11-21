@@ -1,0 +1,36 @@
+name: Deploy .NET Linux IIS
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '6.0.x'
+   # - name: Restore dependencies
+   #   run: dotnet restore
+
+    - name: Build with dotnet
+      run: dotnet build --no-restore
+   
+    - name: Run the Publish
+      run: dotnet publish --configuration Release --no-restore --output ./publish
+      
+      
+ #DEPLOYMENT PHASE
+ 
+    - name: Deploy to IIS Server 
+      run: |
+        echo Starting...
+        sudo apt install sshpass
+        sshpass -p "Virtua/4u" scp -r  /home/ubuntu/Developer/brandon/linux-iis-runner/_work/ASP-IIS-Linux/ASP-IIS-Linux/publish Administrator@192.168.100.160:C:\www\gh-actions-iis-demo.com
