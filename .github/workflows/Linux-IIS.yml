@@ -31,4 +31,4 @@ jobs:
  
     - name: Deploy to IIS Server 
       run: |
-        sshpass -p "Virtua/4u" scp -r  /home/ubuntu/Developer/brandon/linux-iis-runner/_work/ASP-IIS-Linux/ASP-IIS-Linux/publish Administrator@192.168.100.160:C:\www\gh-actions-iis-demo.com
+        sshpass -p {{ $UBUNTU_PASSWORD }} scp -r  /home/ubuntu/Developer/brandon/linux-iis-runner/_work/ASP-IIS-Linux/ASP-IIS-Linux/publish Administrator@192.168.100.160:C:\www\gh-actions-iis-demo.com
