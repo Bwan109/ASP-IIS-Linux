@@ -26,7 +26,7 @@ jobs:
       
     - name: Setup Vault Agent
       run: | 
-        sshpass -p ${{ secrets.WINDOWS_PASSWORD }} ssh Administrator@192.168.100.160 'New-Item -path c:\vault-agent -ItemType "directory"'
+        sshpass -p ${{ secrets.WINDOWS_PASSWORD }} ssh Administrator@192.168.100.160 'mkdir C:\vault-agent'
         sshpass -p ${{ secrets.WINDOWS_PASSWORD }}  ssh Administrator@192.168.100.160 'echo {{ secrets.AGENT_ROLE_ID }} > C:\vault-agent\agent-role-id'
         sshpass -p ${{ secrets.WINDOWS_PASSWORD }}  ssh Administrator@192.168.100.160 'echo {{ secrets.AGENT_SECRET_ID }} > C:\vault-agent\agent-secret-id'
 
@@ -55,4 +55,4 @@ jobs:
 
     - name: Cleanup
       run: |
-        sshpass -p ${{ secrets.WINDOWS_PASSWORD }} ssh Administrator@192.168.100.160 'Remove-Item -Recurse -Force c:\vault-agent'
+        sshpass -p ${{ secrets.WINDOWS_PASSWORD }} ssh Administrator@192.168.100.160 'rmdir /S /Q C:\vault-agent'
