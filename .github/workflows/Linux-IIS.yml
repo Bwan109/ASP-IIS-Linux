@@ -26,9 +26,9 @@ jobs:
       
     - name: Setup Vault Agent
       run: | 
-        sshpass -p ${{ secrets.WINDOWS_PASSWORD }} ssh Administrator@192.168.100.160 'mkdir C:\vault-agent'
-        sshpass -p ${{ secrets.WINDOWS_PASSWORD }}  ssh Administrator@192.168.100.160 'echo ${{ secrets.AGENT_ROLE_ID }} > C:\vault-agent\agent-role-id'
-        sshpass -p ${{ secrets.WINDOWS_PASSWORD }}  ssh Administrator@192.168.100.160 'echo ${{ secrets.AGENT_SECRET_ID }} > C:\vault-agent\agent-secret-id'
+        sshpass -p ${{ secrets.WINDOWS_PASSWORD }} ssh Administrator@192.168.100.160 'mkdir C:\vault-agent2'
+        sshpass -p ${{ secrets.WINDOWS_PASSWORD }}  ssh Administrator@192.168.100.160 'echo ${{ secrets.AGENT_ROLE_ID }} > C:\vault-agent2\agent-role-id'
+        sshpass -p ${{ secrets.WINDOWS_PASSWORD }}  ssh Administrator@192.168.100.160 'echo ${{ secrets.AGENT_SECRET_ID }} > C:\vault-agent2\agent-secret-id'
 
  #DEPLOYMENT PHASE
  # ssh command secure encrypted connection between two hosts over an insecure network.
@@ -55,4 +55,4 @@ jobs:
 
     - name: Cleanup
       run: |
-        sshpass -p ${{ secrets.WINDOWS_PASSWORD }} ssh Administrator@192.168.100.160 'rmdir /S /Q C:\vault-agent'
+        sshpass -p ${{ secrets.WINDOWS_PASSWORD }} ssh Administrator@192.168.100.160 'rmdir /S /Q C:\vault-agent2'
