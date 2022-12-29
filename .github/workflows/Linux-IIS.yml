@@ -44,6 +44,8 @@ jobs:
         sshpass -p ${{ secrets.WINDOWS_PASSWORD }}  ssh Administrator@192.168.100.160 'echo "" > C:\www\gh-actions-iis-demo.com\App_Offline.htm'
         sshpass -p ${{ secrets.WINDOWS_PASSWORD }} scp -r ./publish/* Administrator@192.168.100.160:/C:/www/gh-actions-iis-demo.com
         sshpass -p ${{ secrets.WINDOWS_PASSWORD }} scp ./keys.tmpl Administrator@192.168.100.160:/C:/Users/Administrator/Desktop/github-actions-deployment-to-iis
+        sshpass -p ${{ secrets.WINDOWS_PASSWORD }} scp ./vault-agent.hcl Administrator@192.168.100.160:/C:/Users/Administrator/Desktop/github-actions-deployment-to-iis
+        sshpass -p ${{ secrets.WINDOWS_PASSWORD }} ssh Administrator@192.168.100.160 'vault agent -config=/C:/Users/Administrator/Desktop/github-actions-deployment-to-iis/vault-agent.hcl -log-level=debug'
         sshpass -p ${{ secrets.WINDOWS_PASSWORD }} ssh Administrator@192.168.100.160 'del C:\www\gh-actions-iis-demo.com\App_Offline.htm'
     
 
