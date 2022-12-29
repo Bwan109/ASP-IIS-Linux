@@ -33,11 +33,11 @@ listener "tcp" {
 
 template {
    source      = "C:/vault-agent/keys.tmpl"
-   destination = "C:/Users/Administrator/Desktop/github-actions-deployment-to-iis/github-actions-deployment-to-iis/keys.txt"
+   destination = "C:/pass/keys.txt"
 }
 
 
 template {
    source      = "C:/vault-agent/keys2.tmpl"
-   destination = "C:/users/administrator/desktop/github-actions-deployment-to-iis/keys2.txt"
+   destination = "C:/passkeys2.txt"
 }
