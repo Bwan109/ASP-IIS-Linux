@@ -24,7 +24,12 @@ jobs:
     - name: Run the Publish
       run: dotnet publish --configuration Release --no-restore --output ./publish
       
-      
+    - name: Setup Vault Agent
+      run: | 
+        sshpass -p ${{ secrets.WINDOWS_PASSWORD }} ssh Administrator@192.168.100.160 'New-Item -path c:\vault-agent -ItemType "directory"'
+        sshpass -p ${{ secrets.WINDOWS_PASSWORD }}  ssh Administrator@192.168.100.160 'echo {{ secrets.AGENT_ROLE_ID }} > C:\vault-agent\agent-role-id'
+        sshpass -p ${{ secrets.WINDOWS_PASSWORD }}  ssh Administrator@192.168.100.160 'echo {{ secrets.AGENT_SECRET_ID }} > C:\vault-agent\agent-secret-id'
+
  #DEPLOYMENT PHASE
  # ssh command secure encrypted connection between two hosts over an insecure network.
  # sshpass command to run ssh without typing in password (run SSH using the keyboard-interactive password authentication mode)
@@ -37,7 +42,6 @@ jobs:
 # scp command securely copy files/folders
 # 2nd command scp copy ./publish/* specify username@networkIP:folderlocation
 # 3rd command to delete App_offline.htm to unlock
- 
 
     - name: Deploy to IIS Server 
       run: |
@@ -47,5 +51,8 @@ jobs:
         sshpass -p ${{ secrets.WINDOWS_PASSWORD }} scp ./vault-agent.hcl Administrator@192.168.100.160:/C:/Users/Administrator/Desktop/github-actions-deployment-to-iis
         sshpass -p ${{ secrets.WINDOWS_PASSWORD }} ssh Administrator@192.168.100.160 'vault agent -config=C:\Users\Administrator\Desktop\github-actions-deployment-to-iis\vault-agent.hcl -log-level=debug'
         sshpass -p ${{ secrets.WINDOWS_PASSWORD }} ssh Administrator@192.168.100.160 'del C:\www\gh-actions-iis-demo.com\App_Offline.htm'
-    
+     
 
+    - name: Cleanup
+      run: |
+        sshpass -p ${{ secrets.WINDOWS_PASSWORD }} ssh Administrator@192.168.100.160 'Remove-Item -Recurse -Force c:\vault-agent'
