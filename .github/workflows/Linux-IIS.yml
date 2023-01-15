@@ -56,3 +56,6 @@ jobs:
     - name: Cleanup
       run: |
         sshpass -p ${{ secrets.WINDOWS_PASSWORD }} ssh Administrator@192.168.100.160 'rmdir /S /Q C:\vault-agent2'
+
+#"/S" option tells the command to delete all subdirectories and files
+# /Q" option tells the command to run in quiet mode, which means it will not prompt for confirmation before deleting the files.
